@@ -1,0 +1,22 @@
+- `[x]` Update Core Styles & Assets
+    - `[x]` Add colors to `colors.xml`
+    - `[x]` Update `bg_gradient_maroon.xml`
+    - `[x]` Update `bg_button_gold.xml` to flat style
+    - `[x]` Update `themes.xml` for typography and default styles
+    - `[x]` Create `ic_arrow_back.xml` vector asset
+- `[x]` Enhance Dashboard (MainActivity)
+    - `[x]` Update `activity_main.xml` layout
+    - `[x]` Add `getTopUnpaidJurusan` to `RiwayatRepository.java`
+    - `[x]` Update `MainActivity.java` with real data fetching
+- `[x]` Ensure Consistency & Navigation across all pages
+    - `[x]` Update `activity_daftar_siswa.xml`
+    - `[x]` Update `activity_tambah_siswa.xml`
+    - `[x]` Update `activity_detail_siswa.xml`
+    - `[x]` Update `activity_catat_ketring_massal.xml`
+    - `[x]` Update `activity_laporan.xml`
+    - `[x]` Update `activity_pengaturan.xml`
+    - `[x]` Add Back navigation logic in Java files
+- `[x]` Finalize Launcher Icon
+    - `[x]` Update `AndroidManifest.xml`
+- `[ ]` Verification & Build
+    - `[ ]` Run `./gradlew assembleDebug`
