@@ -1,0 +1,11 @@
+- [x] Task 1: Debug & Fix LaporanActivity
+    - [x] Add logging to `loadAllData`, `loadKetring`, and `loadPembayaran`
+    - [x] Fix filter logic in `processData` ("Status" vs "Semua Status")
+    - [x] Add try-catch block for debugging in `processData`
+- [x] Task 2: Refine Detail Jurusan Layout
+    - [x] Update `item_detail_jurusan.xml` with two-line layout and gold count
+    - [x] Update `DetailJurusanAdapter.java` to match new IDs and formatting
+- [x] Task 3: Final Verification
+    - [x] Check Logcat for data reception logs
+    - [x] Verify LaporanActivity displays data
+    - [x] Verify Detail Jurusan layout proportions

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <color name="maroon_primary">#9E003A</color>
+    <color name="gold_accent">#D9A441</color>
+    <color name="pink_accent">#E91E8C</color>
+
+    <color name="dian_surface">#6E0028</color>
+    <color name="dian_bg_bottom">#2A0E16</color>
+    <color name="dian_text_secondary">#F3E6D8</color>
+
+    <color name="maroon_dark">#71002B</color>
+    <color name="gold_dark">#C88323</color>
+
+    <color name="dian_maroon">#9E003A</color>
+    <color name="dian_maroon_dark">#71002B</color>
+    <color name="dian_maroon_light">#71002B</color>
+    <color name="dian_gold">#D9A441</color>
+    <color name="dian_gold_dark">#C88323</color>
+</resources>

@@ -1,0 +1,24 @@
+# Task: UI Modernization and Functional Cleanup
+
+- `[x]` Simplify Pricing Logic (Hardcode Rp 20.000)
+    - `[x]` Update `RiwayatRepository.java`
+    - `[x]` Update `CatatKetringMassalActivity.java`
+    - `[x]` Update `DetailSiswaActivity.java`
+    - `[x]` Delete `PengaturanActivity.java` and `activity_pengaturan.xml`
+    - `[x]` Update `AndroidManifest.xml`
+- `[x]` Visual Assets and Theming
+    - `[x]` Create `bg_icon_badge.xml`
+    - `[x]` Create `bg_card_rekap.xml`
+    - `[x]` Update icons to outline versions (`ic_group`, `ic_restaurant`, `ic_bar_chart`, `ic_logout`)
+- `[x]` Dashboard UI Overhaul (`activity_main.xml`)
+    - `[x]` Adjust root layout spacing (16dp horizontal, 12dp vertical)
+    - `[x]` Reconstruct Menu Grid (3 vertical cards: Data Murid, Catat Ketring, Laporan)
+    - `[x]` Style Rekap Jurusan card (Dark maroon #4A0620)
+- `[x]` Logic and Reliability Updates
+    - `[x]` Update `MainActivity.java` menu listeners (Removed Settings, Added Laporan)
+    - `[x]` Update `populateLaporanPreview` logic and layout (Dividers, Jurusan/Count)
+    - `[x]` Add error logging for Firebase queries in `RiwayatRepository`
+- `[x]` Verification
+    - `[x]` Build project (checked for obvious errors)
+    - `[x]` Verify UI in layout editor/device (applied changes to layouts)
+    - `[x]` Verify price logic (hardcoded in relevant activities)

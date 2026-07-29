@@ -1,0 +1,21 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Theme.Iseng" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/dian_maroon</item>
+        <item name="colorPrimaryVariant">@color/dian_maroon_dark</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor">@color/dian_maroon</item>
+
+        <!-- Typography -->
+        <item name="android:fontFamily">@font/font_body</item>
+    </style>
+
+    <style name="TextAppearance.Dian.Heading" parent="TextAppearance.MaterialComponents.Headline6">
+        <item name="android:fontFamily">@font/font_heading</item>
+        <item name="android:textColor">@color/gold_accent</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+</resources>
