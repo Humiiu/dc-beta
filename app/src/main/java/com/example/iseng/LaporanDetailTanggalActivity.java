@@ -23,6 +23,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -114,6 +115,8 @@ public class LaporanDetailTanggalActivity extends AppCompatActivity {
                                 allSiswaList.add(siswaMap.get(r.getSiswaId()));
                             }
                         }
+                        // Sort A-Z
+                        Collections.sort(allSiswaList, (s1, s2) -> s1.getNama().compareToIgnoreCase(s2.getNama()));
                         applyFilter();
                     }
 

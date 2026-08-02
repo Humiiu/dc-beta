@@ -1,9 +1,12 @@
 package com.example.iseng;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -21,6 +24,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -29,6 +33,7 @@ import java.util.Set;
 public class CatatKetringMassalActivity extends AppCompatActivity {
 
     private Spinner spnFilterKelas, spnFilterJurusan;
+    private EditText etSearch;
     private RecyclerView rvSiswa;
     private SiswaMassalAdapter adapter;
     private List<Siswa> allSiswaList = new ArrayList<>();
@@ -46,6 +51,7 @@ public class CatatKetringMassalActivity extends AppCompatActivity {
 
         spnFilterKelas = findViewById(R.id.spnFilterKelasMassal);
         spnFilterJurusan = findViewById(R.id.spnFilterJurusanMassal);
+        etSearch = findViewById(R.id.etSearchMassal);
         rvSiswa = findViewById(R.id.rvSiswaMassal);
 
         findViewById(R.id.btnBack).setOnClickListener(v -> finish());
@@ -56,8 +62,22 @@ public class CatatKetringMassalActivity extends AppCompatActivity {
 
         setupFilters();
         loadSiswaData();
+        setupSearch();
 
         findViewById(R.id.btnSimpanMassal).setOnClickListener(v -> simpanMassal());
+    }
+
+    private void setupSearch() {
+        etSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                applyFilter();
+            }
+            @Override
+            public void afterTextChanged(Editable s) {}
+        });
     }
 
     private void setupFilters() {
@@ -97,6 +117,8 @@ public class CatatKetringMassalActivity extends AppCompatActivity {
                         allSiswaList.add(siswa);
                     }
                 }
+                // Sort A-Z
+                Collections.sort(allSiswaList, (s1, s2) -> s1.getNama().compareToIgnoreCase(s2.getNama()));
                 applyFilter();
             }
             @Override
@@ -107,12 +129,15 @@ public class CatatKetringMassalActivity extends AppCompatActivity {
     private void applyFilter() {
         String selectedKelas = spnFilterKelas.getSelectedItem().toString();
         String selectedJurusan = spnFilterJurusan.getSelectedItem().toString();
+        String query = etSearch.getText().toString().toLowerCase().trim();
 
         filteredList.clear();
         for (Siswa s : allSiswaList) {
             boolean matchesKelas = selectedKelas.equals("Kelas") || s.getKelas().equals(selectedKelas);
             boolean matchesJurusan = selectedJurusan.equals("Jurusan") || s.getJurusan().equals(selectedJurusan);
-            if (matchesKelas && matchesJurusan) {
+            boolean matchesSearch = s.getNama().toLowerCase().contains(query);
+            
+            if (matchesKelas && matchesJurusan && matchesSearch) {
                 filteredList.add(s);
             }
         }

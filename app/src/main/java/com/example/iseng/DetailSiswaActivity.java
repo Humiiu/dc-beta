@@ -4,12 +4,14 @@ import android.app.AlertDialog;
 import android.os.Bundle;
 import android.text.InputType;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -34,6 +36,7 @@ public class DetailSiswaActivity extends AppCompatActivity {
     private Siswa currentSiswa;
 
     private TextView tvNama, tvKelasJurusan, tvTotalTagihan, tvTotalDibayar, tvSisaTagihan, tvStatusBayar;
+    private CheckBox cbLangganan;
     private RecyclerView rvKetring, rvPembayaran;
     private RiwayatKetringAdapter ketringAdapter;
     private RiwayatPembayaranAdapter pembayaranAdapter;
@@ -71,6 +74,7 @@ public class DetailSiswaActivity extends AppCompatActivity {
         tvTotalDibayar = findViewById(R.id.tvTotalDibayar);
         tvSisaTagihan = findViewById(R.id.tvSisaTagihan);
         tvStatusBayar = findViewById(R.id.tvStatusBayar);
+        cbLangganan = findViewById(R.id.cbLangganan);
 
         rvKetring = findViewById(R.id.rvRiwayatKetring);
         rvPembayaran = findViewById(R.id.rvRiwayatPembayaran);
@@ -82,6 +86,69 @@ public class DetailSiswaActivity extends AppCompatActivity {
         rvPembayaran.setLayoutManager(new LinearLayoutManager(this));
         pembayaranAdapter = new RiwayatPembayaranAdapter(listPembayaran);
         rvPembayaran.setAdapter(pembayaranAdapter);
+
+        setupSwipeToDelete();
+    }
+
+    private void setupSwipeToDelete() {
+        ItemTouchHelper.SimpleCallback ketringCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                int position = viewHolder.getAdapterPosition();
+                RiwayatKetring record = listKetring.get(position);
+                showDeleteConfirmation("ketring", record.getId(), record.getTanggal(), position);
+            }
+        };
+        new ItemTouchHelper(ketringCallback).attachToRecyclerView(rvKetring);
+
+        ItemTouchHelper.SimpleCallback pembayaranCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                int position = viewHolder.getAdapterPosition();
+                RiwayatPembayaran record = listPembayaran.get(position);
+                showDeleteConfirmation("pembayaran", record.getId(), record.getTanggal(), position);
+            }
+        };
+        new ItemTouchHelper(pembayaranCallback).attachToRecyclerView(rvPembayaran);
+    }
+
+    private void showDeleteConfirmation(String type, String id, String date, int position) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Hapus Record");
+        String message = type.equals("ketring") ? 
+                "Hapus catatan ketring tanggal " + date + "?" :
+                "Hapus catatan pembayaran tanggal " + date + "?";
+        builder.setMessage(message);
+        
+        builder.setPositiveButton("Hapus", (dialog, which) -> {
+            if (type.equals("ketring")) {
+                repository.deleteRiwayatKetring(id);
+            } else {
+                repository.deleteRiwayatPembayaran(id);
+            }
+            Toast.makeText(this, "Record berhasil dihapus", Toast.LENGTH_SHORT).show();
+        });
+        
+        builder.setNegativeButton("Batal", (dialog, which) -> {
+            if (type.equals("ketring")) {
+                ketringAdapter.notifyItemChanged(position);
+            } else {
+                pembayaranAdapter.notifyItemChanged(position);
+            }
+        });
+
+        builder.setCancelable(false);
+        builder.show();
     }
 
     private void loadSiswaData() {
@@ -93,6 +160,13 @@ public class DetailSiswaActivity extends AppCompatActivity {
                 if (currentSiswa != null) {
                     tvNama.setText(currentSiswa.getNama());
                     tvKelasJurusan.setText(currentSiswa.getKelas() + " - " + currentSiswa.getJurusan());
+                    
+                    cbLangganan.setOnCheckedChangeListener(null);
+                    cbLangganan.setChecked(currentSiswa.isLangganan());
+                    cbLangganan.setOnCheckedChangeListener((buttonView, isChecked) -> {
+                        FirebaseDatabase.getInstance().getReference("siswa").child(siswaId)
+                                .child("langganan").setValue(isChecked);
+                    });
                 }
             }
             @Override

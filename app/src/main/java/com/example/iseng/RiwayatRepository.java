@@ -43,6 +43,14 @@ public class RiwayatRepository {
     public void getRiwayatPembayaranBySiswa(String siswaId, ValueEventListener listener) {
         mDatabase.child("riwayat_pembayaran").orderByChild("siswaId").equalTo(siswaId).addValueEventListener(listener);
     }
+
+    public void deleteRiwayatKetring(String id) {
+        mDatabase.child("riwayat_ketring").child(id).removeValue();
+    }
+
+    public void deleteRiwayatPembayaran(String id) {
+        mDatabase.child("riwayat_pembayaran").child(id).removeValue();
+    }
     
     public static long calculateTotalTagihan(List<RiwayatKetring> list) {
         long total = 0;
@@ -69,50 +77,9 @@ public class RiwayatRepository {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
                 long totalSiswa = snapshot.child("siswa").getChildrenCount();
+                long totalKetring = snapshot.child("riwayat_ketring").getChildrenCount();
                 
-                Map<String, Long> tagihanMap = new HashMap<>();
-                for (DataSnapshot ds : snapshot.child("riwayat_ketring").getChildren()) {
-                    RiwayatKetring r = ds.getValue(RiwayatKetring.class);
-                    if (r != null) {
-                        tagihanMap.put(r.getSiswaId(), tagihanMap.getOrDefault(r.getSiswaId(), 0L) + r.getHarga());
-                    }
-                }
-
-                Map<String, Long> bayarMap = new HashMap<>();
-                for (DataSnapshot ds : snapshot.child("riwayat_pembayaran").getChildren()) {
-                    RiwayatPembayaran r = ds.getValue(RiwayatPembayaran.class);
-                    if (r != null) {
-                        bayarMap.put(r.getSiswaId(), bayarMap.getOrDefault(r.getSiswaId(), 0L) + r.getNominal());
-                    }
-                }
-
-                long belumLunasCount = 0;
-                Map<String, Integer> unpaidByJurusan = new HashMap<>();
-                
-                for (DataSnapshot ds : snapshot.child("siswa").getChildren()) {
-                    Siswa s = ds.getValue(Siswa.class);
-                    if (s != null) {
-                        String id = s.getId();
-                        long tagihan = tagihanMap.getOrDefault(id, 0L);
-                        long bayar = bayarMap.getOrDefault(id, 0L);
-                        if (tagihan > bayar) {
-                            belumLunasCount++;
-                            String jurusan = s.getJurusan();
-                            unpaidByJurusan.put(jurusan, unpaidByJurusan.getOrDefault(jurusan, 0) + 1);
-                        }
-                    }
-                }
-                
-                List<Map.Entry<String, Integer>> sortedJurusans = new ArrayList<>(unpaidByJurusan.entrySet());
-                sortedJurusans.sort((e1, e2) -> e2.getValue().compareTo(e1.getValue()));
-                
-                List<UnpaidJurusan> topJurusans = new ArrayList<>();
-                for (int i = 0; i < Math.min(3, sortedJurusans.size()); i++) {
-                    Map.Entry<String, Integer> entry = sortedJurusans.get(i);
-                    topJurusans.add(new UnpaidJurusan(entry.getKey(), entry.getValue()));
-                }
-                
-                callback.onDashboardResult(totalSiswa, belumLunasCount, topJurusans);
+                callback.onDashboardResult(totalSiswa, totalKetring);
             }
 
             @Override
@@ -123,15 +90,6 @@ public class RiwayatRepository {
     }
 
     public interface DashboardCallback {
-        void onDashboardResult(long totalSiswa, long belumLunas, List<UnpaidJurusan> topJurusans);
-    }
-
-    public static class UnpaidJurusan {
-        public String nama;
-        public int count;
-        public UnpaidJurusan(String nama, int count) {
-            this.nama = nama;
-            this.count = count;
-        }
+        void onDashboardResult(long totalSiswa, long totalKetring);
     }
 }

@@ -117,12 +117,12 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Belum Lunas"
+                            android:text="Total Ketring"
                             android:textColor="#D9A441"
                             android:textSize="12sp" />
 
                         <TextView
-                            android:id="@+id/tvBelumLunas"
+                            android:id="@+id/tvTotalKetring"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
@@ -135,6 +135,7 @@
             </LinearLayout>
 
             <!-- 2 Menu Atas (Data Murid & Catat Ketring) -->
+            <!-- Grid Menu 2x2 -->
             <GridLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -227,52 +228,95 @@
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
 
+                <!-- Bayar Massal -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/btnBayarMassal"
+                    android:layout_width="0dp"
+                    android:layout_height="110dp"
+                    android:layout_columnWeight="1"
+                    android:layout_margin="4dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:cardBackgroundColor="@color/dian_surface"
+                    app:cardCornerRadius="20dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="8dp">
+
+                        <FrameLayout
+                            android:layout_width="44dp"
+                            android:layout_height="44dp"
+                            android:background="@drawable/bg_icon_badge">
+
+                            <ImageView
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:layout_gravity="center"
+                                android:src="@drawable/ic_restaurant"
+                                app:tint="#C9A227" />
+                        </FrameLayout>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:text="Bayar Massal"
+                            android:textColor="#CCFFFFFF"
+                            android:textSize="12sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- Laporan -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/btnMenuLaporan"
+                    android:layout_width="0dp"
+                    android:layout_height="110dp"
+                    android:layout_columnWeight="1"
+                    android:layout_margin="4dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:cardBackgroundColor="@color/dian_surface"
+                    app:cardCornerRadius="20dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="8dp">
+
+                        <FrameLayout
+                            android:layout_width="44dp"
+                            android:layout_height="44dp"
+                            android:background="@drawable/bg_icon_badge">
+
+                            <ImageView
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:layout_gravity="center"
+                                android:src="@drawable/ic_bar_chart"
+                                app:tint="#C9A227" />
+                        </FrameLayout>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:text="Laporan"
+                            android:textColor="#CCFFFFFF"
+                            android:textSize="12sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
             </GridLayout>
 
-            <!-- Menu LAPORAN (Memanjang Sendiri Sesuai Figma) -->
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/btnMenuLaporan"
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:layout_marginHorizontal="4dp"
-                android:layout_marginTop="4dp"
-                android:clickable="true"
-                android:focusable="true"
-                app:cardBackgroundColor="@color/dian_surface"
-                app:cardCornerRadius="20dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:padding="8dp">
-
-                    <FrameLayout
-                        android:layout_width="44dp"
-                        android:layout_height="44dp"
-                        android:background="@drawable/bg_icon_badge">
-
-                        <ImageView
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:layout_gravity="center"
-                            android:src="@drawable/ic_bar_chart"
-                            app:tint="#C9A227" />
-                    </FrameLayout>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:text="Laporan"
-                        android:textColor="#CCFFFFFF"
-                        android:textSize="12sp"
-                        android:textStyle="bold" />
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
-
-            <!-- Card Rekap (Kembali Original seperti awal) -->
+            <!-- Menu Mingguan Card -->
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -288,44 +332,20 @@
                     android:orientation="vertical"
                     android:padding="16dp">
 
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Total per Jurusan"
-                            android:textColor="#FFD484"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:id="@+id/btnLihatSemuaLaporan"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentEnd="true"
-                            android:background="?attr/selectableItemBackground"
-                            android:clickable="true"
-                            android:focusable="true"
-                            android:text="Lihat semua →"
-                            android:textColor="#C9A227"
-                            android:textSize="12sp" />
-                    </RelativeLayout>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="MENU MINGGUAN"
+                        android:textColor="#FFD484"
+                        android:textStyle="bold" />
 
                     <LinearLayout
-                        android:id="@+id/llLaporanPreview"
+                        android:id="@+id/llMenuMingguan"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp"
                         android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Memuat data..."
-                            android:textColor="#CCFFFFFF"
-                            android:textSize="13sp" />
-
+                        <!-- Monday to Friday rows will be added dynamically or statically -->
                     </LinearLayout>
 
                 </LinearLayout>

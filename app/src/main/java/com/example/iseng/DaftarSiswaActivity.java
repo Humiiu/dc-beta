@@ -2,9 +2,12 @@ package com.example.iseng;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -20,11 +23,13 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class DaftarSiswaActivity extends AppCompatActivity {
 
     private Spinner spnFilterKelas, spnFilterJurusan;
+    private EditText etSearch;
     private RecyclerView rvSiswa;
     private SiswaAdapter adapter;
     private List<Siswa> allSiswaList = new ArrayList<>();
@@ -44,6 +49,7 @@ public class DaftarSiswaActivity extends AppCompatActivity {
 
         spnFilterKelas = findViewById(R.id.spnFilterKelas);
         spnFilterJurusan = findViewById(R.id.spnFilterJurusan);
+        etSearch = findViewById(R.id.etSearchSiswa);
         rvSiswa = findViewById(R.id.rvSiswa);
 
         findViewById(R.id.btnBack).setOnClickListener(v -> finish());
@@ -56,10 +62,25 @@ public class DaftarSiswaActivity extends AppCompatActivity {
 
         setupFilters();
         loadSiswaData();
+        setupSearch();
 
         findViewById(R.id.btnTambahSiswa).setOnClickListener(v -> 
             startActivity(new Intent(this, TambahSiswaActivity.class))
         );
+    }
+
+    private void setupSearch() {
+        if (etSearch == null) return;
+        etSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                applyFilter();
+            }
+            @Override
+            public void afterTextChanged(Editable s) {}
+        });
     }
 
     private void setupFilters() {
@@ -106,6 +127,8 @@ public class DaftarSiswaActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
                 }
+                // Sort A-Z
+                Collections.sort(allSiswaList, (s1, s2) -> s1.getNama().compareToIgnoreCase(s2.getNama()));
                 applyFilter();
             }
 
@@ -121,13 +144,15 @@ public class DaftarSiswaActivity extends AppCompatActivity {
 
         String selectedKelas = spnFilterKelas.getSelectedItem().toString();
         String selectedJurusan = spnFilterJurusan.getSelectedItem().toString();
+        String query = etSearch != null ? etSearch.getText().toString().toLowerCase().trim() : "";
 
         filteredList.clear();
         for (Siswa s : allSiswaList) {
             boolean matchesKelas = selectedKelas.equals("Kelas") || s.getKelas().equals(selectedKelas);
             boolean matchesJurusan = selectedJurusan.equals("Jurusan") || s.getJurusan().equals(selectedJurusan);
+            boolean matchesSearch = s.getNama().toLowerCase().contains(query);
 
-            if (matchesKelas && matchesJurusan) {
+            if (matchesKelas && matchesJurusan && matchesSearch) {
                 filteredList.add(s);
             }
         }

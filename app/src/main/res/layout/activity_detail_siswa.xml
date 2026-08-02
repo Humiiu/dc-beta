@@ -136,6 +136,31 @@
                             android:textStyle="bold" />
                     </GridLayout>
 
+                    <!-- Update Perhari Toggle -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginTop="16dp">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Update Perhari"
+                            android:textColor="#D9A441"
+                            android:textStyle="bold"
+                            android:fontFamily="@font/font_body" />
+
+                        <CheckBox
+                            android:id="@+id/cbLangganan"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:buttonTint="#D9A441" />
+
+                    </LinearLayout>
+
                     <TextView
                         android:id="@+id/tvStatusBayar"
                         android:layout_width="wrap_content"

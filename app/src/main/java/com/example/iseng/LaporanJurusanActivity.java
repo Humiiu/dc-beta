@@ -76,7 +76,7 @@ public class LaporanJurusanActivity extends AppCompatActivity {
             TextView tvNama;
             public ViewHolder(@NonNull View itemView) {
                 super(itemView);
-                tvNama = itemView.findViewById(R.id.tvJurusanNama);
+                tvNama = itemView.findViewById(R.id.tvJurusanKelas);
             }
         }
     }

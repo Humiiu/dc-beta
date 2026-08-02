@@ -27,8 +27,10 @@
         <activity android:name=".TambahSiswaActivity" android:exported="false" />
         <activity android:name=".DetailSiswaActivity" android:exported="false" />
         <activity android:name=".CatatKetringMassalActivity" android:exported="false" />
-        <activity android:name=".LaporanActivity" android:exported="false" />
-        <activity android:name=".DetailJurusanActivity" android:exported="false" />
+        <activity android:name=".BayarMassalActivity" android:exported="false" />
+        <activity android:name=".LaporanJurusanActivity" android:exported="false" />
+        <activity android:name=".LaporanTanggalActivity" android:exported="false" />
+        <activity android:name=".LaporanDetailTanggalActivity" android:exported="false" />
 
     </application>
 
